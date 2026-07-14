@@ -1,0 +1,407 @@
+DIGEST d10945cfc495644fcf1493e90bccd684
+FSelectionSort.selection_sort_corrigido_com_provas
+R229:233 Coq.Arith.Arith <> <> lib
+R235:238 Coq.Lists.List <> <> lib
+R240:242 Coq.micromega.Lia <> <> lib
+R260:265 Coq.Sorting.Sorted <> <> lib
+R283:293 Coq.Sorting.Permutation <> <> lib
+R304:316 Coq.Lists.List ListNotations <> mod
+def 2583:2588 <> le_all
+R2595:2597 Coq.Init.Datatypes <> nat ind
+binder 2591:2591 <> x:1
+R2605:2608 Coq.Init.Datatypes <> list ind
+R2610:2612 Coq.Init.Datatypes <> nat ind
+binder 2601:2601 <> l:2
+binder 2634:2634 <> y:3
+R2643:2646 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R2637:2638 Coq.Lists.List <> In def
+R2642:2642 SelectionSort.selection_sort_corrigido_com_provas <> l:2 var
+R2640:2640 SelectionSort.selection_sort_corrigido_com_provas <> y:3 var
+R2648:2651 Coq.Init.Peano <> ::nat_scope:x_'<='_x not
+R2647:2647 SelectionSort.selection_sort_corrigido_com_provas <> x:1 var
+R2652:2652 SelectionSort.selection_sort_corrigido_com_provas <> y:3 var
+def 5363:5368 <> select
+R5375:5377 Coq.Init.Datatypes <> nat ind
+binder 5371:5371 <> x:4
+R5385:5388 Coq.Init.Datatypes <> list ind
+R5390:5392 Coq.Init.Datatypes <> nat ind
+binder 5381:5381 <> l:5
+R5400:5402 Coq.Init.Datatypes <> ::type_scope:x_'*'_x not
+R5397:5399 Coq.Init.Datatypes <> nat ind
+R5403:5406 Coq.Init.Datatypes <> list ind
+R5408:5410 Coq.Init.Datatypes <> nat ind
+R5423:5423 SelectionSort.selection_sort_corrigido_com_provas <> l:5 var
+R5434:5435 Coq.Lists.List ListNotations ::list_scope:'['_']' not
+R5440:5440 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5442:5443 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5446:5446 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5441:5441 SelectionSort.selection_sort_corrigido_com_provas <> x:4 var
+R5444:5445 Coq.Lists.List ListNotations ::list_scope:'['_']' not
+R5453:5456 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R5472:5476 Coq.Arith.PeanoNat <> ::nat_scope:x_'<=?'_x not
+R5471:5471 SelectionSort.selection_sort_corrigido_com_provas <> x:4 var
+R5575:5580 SelectionSort.selection_sort_corrigido_com_provas <> select:6 def
+R5565:5565 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5567:5568 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5570:5570 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5597:5597 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5599:5600 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5607:5607 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5602:5605 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R5601:5601 SelectionSort.selection_sort_corrigido_com_provas <> x:4 var
+R5507:5512 SelectionSort.selection_sort_corrigido_com_provas <> select:6 def
+R5514:5514 SelectionSort.selection_sort_corrigido_com_provas <> x:4 var
+R5497:5497 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5499:5500 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5502:5502 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5529:5529 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5531:5532 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5539:5539 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5534:5537 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+prf 7437:7447 <> select_spec
+binder 7460:7460 <> x:8
+binder 7462:7462 <> l:9
+binder 7464:7464 <> m:10
+binder 7466:7466 <> r:11
+R7492:7499 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R7483:7485 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R7473:7478 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R7480:7480 SelectionSort.selection_sort_corrigido_com_provas <> x:8 var
+R7482:7482 SelectionSort.selection_sort_corrigido_com_provas <> l:9 var
+R7486:7486 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R7488:7489 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R7491:7491 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R7487:7487 SelectionSort.selection_sort_corrigido_com_provas <> m:10 var
+R7490:7490 SelectionSort.selection_sort_corrigido_com_provas <> r:11 var
+R7529:7536 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R7500:7510 Coq.Sorting.Permutation <> Permutation ind
+R7523:7526 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R7522:7522 SelectionSort.selection_sort_corrigido_com_provas <> m:10 var
+R7527:7527 SelectionSort.selection_sort_corrigido_com_provas <> r:11 var
+R7514:7517 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R7513:7513 SelectionSort.selection_sort_corrigido_com_provas <> x:8 var
+R7518:7518 SelectionSort.selection_sort_corrigido_com_provas <> l:9 var
+R7554:7561 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R7537:7542 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R7544:7544 SelectionSort.selection_sort_corrigido_com_provas <> m:10 var
+R7548:7551 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R7547:7547 SelectionSort.selection_sort_corrigido_com_provas <> x:8 var
+R7552:7552 SelectionSort.selection_sort_corrigido_com_provas <> l:9 var
+R7570:7572 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R7562:7567 Coq.Init.Datatypes <> length def
+R7569:7569 SelectionSort.selection_sort_corrigido_com_provas <> r:11 var
+R7573:7578 Coq.Init.Datatypes <> length def
+R7580:7580 SelectionSort.selection_sort_corrigido_com_provas <> l:9 var
+R9434:9449 Coq.Sorting.Permutation <> Permutation_refl thm
+R9434:9449 Coq.Sorting.Permutation <> Permutation_refl thm
+R9758:9763 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R11167:11171 Coq.Arith.PeanoNat <> ::nat_scope:x_'<=?'_x not
+R11167:11171 Coq.Arith.PeanoNat <> ::nat_scope:x_'<=?'_x not
+R11453:11458 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R11453:11458 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R12707:12723 Coq.Sorting.Permutation <> Permutation_trans thm
+R12707:12723 Coq.Sorting.Permutation <> Permutation_trans thm
+R12815:12823 Coq.Sorting.Permutation <> perm_swap constr
+R12815:12823 Coq.Sorting.Permutation <> perm_swap constr
+R12947:12963 Coq.Sorting.Permutation <> Permutation_trans thm
+R12947:12963 Coq.Sorting.Permutation <> Permutation_trans thm
+R13075:13083 Coq.Sorting.Permutation <> perm_skip constr
+R13075:13083 Coq.Sorting.Permutation <> perm_skip constr
+R13200:13208 Coq.Sorting.Permutation <> perm_swap constr
+R13200:13208 Coq.Sorting.Permutation <> perm_swap constr
+R13440:13445 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R14557:14566 Coq.Arith.PeanoNat Nat leb_le thm
+R14557:14566 Coq.Arith.PeanoNat Nat leb_le thm
+R14600:14611 Coq.Arith.PeanoNat Nat le_trans thm
+R14600:14611 Coq.Arith.PeanoNat Nat le_trans thm
+R15615:15620 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R15615:15620 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R16317:16333 Coq.Sorting.Permutation <> Permutation_trans thm
+R16317:16333 Coq.Sorting.Permutation <> Permutation_trans thm
+R16429:16437 Coq.Sorting.Permutation <> perm_skip constr
+R16429:16437 Coq.Sorting.Permutation <> perm_skip constr
+R16546:16554 Coq.Sorting.Permutation <> perm_swap constr
+R16546:16554 Coq.Sorting.Permutation <> perm_swap constr
+R16740:16745 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R17177:17186 Coq.Arith.PeanoNat Nat leb_gt thm
+R17177:17186 Coq.Arith.PeanoNat Nat leb_gt thm
+R17217:17228 Coq.Arith.PeanoNat Nat le_trans thm
+R17217:17228 Coq.Arith.PeanoNat Nat le_trans thm
+prf 19686:19696 <> select_perm
+binder 19709:19709 <> x:12
+binder 19711:19711 <> l:13
+binder 19713:19713 <> m:14
+binder 19715:19715 <> r:15
+R19741:19748 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R19732:19734 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R19722:19727 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R19729:19729 SelectionSort.selection_sort_corrigido_com_provas <> x:12 var
+R19731:19731 SelectionSort.selection_sort_corrigido_com_provas <> l:13 var
+R19735:19735 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R19737:19738 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R19740:19740 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R19736:19736 SelectionSort.selection_sort_corrigido_com_provas <> m:14 var
+R19739:19739 SelectionSort.selection_sort_corrigido_com_provas <> r:15 var
+R19749:19759 Coq.Sorting.Permutation <> Permutation ind
+R19772:19775 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R19771:19771 SelectionSort.selection_sort_corrigido_com_provas <> m:14 var
+R19776:19776 SelectionSort.selection_sort_corrigido_com_provas <> r:15 var
+R19763:19766 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R19762:19762 SelectionSort.selection_sort_corrigido_com_provas <> x:12 var
+R19767:19767 SelectionSort.selection_sort_corrigido_com_provas <> l:13 var
+R20133:20143 SelectionSort.selection_sort_corrigido_com_provas <> select_spec thm
+R20133:20143 SelectionSort.selection_sort_corrigido_com_provas <> select_spec thm
+prf 20539:20552 <> select_minimum
+binder 20565:20565 <> x:16
+binder 20567:20567 <> l:17
+binder 20569:20569 <> m:18
+binder 20571:20571 <> r:19
+R20597:20604 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R20588:20590 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R20578:20583 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R20585:20585 SelectionSort.selection_sort_corrigido_com_provas <> x:16 var
+R20587:20587 SelectionSort.selection_sort_corrigido_com_provas <> l:17 var
+R20591:20591 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R20593:20594 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R20596:20596 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R20592:20592 SelectionSort.selection_sort_corrigido_com_provas <> m:18 var
+R20595:20595 SelectionSort.selection_sort_corrigido_com_provas <> r:19 var
+R20605:20610 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R20612:20612 SelectionSort.selection_sort_corrigido_com_provas <> m:18 var
+R20616:20619 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R20615:20615 SelectionSort.selection_sort_corrigido_com_provas <> x:16 var
+R20620:20620 SelectionSort.selection_sort_corrigido_com_provas <> l:17 var
+R20782:20792 SelectionSort.selection_sort_corrigido_com_provas <> select_spec thm
+R20782:20792 SelectionSort.selection_sort_corrigido_com_provas <> select_spec thm
+prf 21150:21162 <> select_length
+binder 21175:21175 <> x:20
+binder 21177:21177 <> l:21
+binder 21179:21179 <> m:22
+binder 21181:21181 <> r:23
+R21207:21214 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R21198:21200 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R21188:21193 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R21195:21195 SelectionSort.selection_sort_corrigido_com_provas <> x:20 var
+R21197:21197 SelectionSort.selection_sort_corrigido_com_provas <> l:21 var
+R21201:21201 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R21203:21204 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R21206:21206 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R21202:21202 SelectionSort.selection_sort_corrigido_com_provas <> m:22 var
+R21205:21205 SelectionSort.selection_sort_corrigido_com_provas <> r:23 var
+R21223:21225 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R21215:21220 Coq.Init.Datatypes <> length def
+R21222:21222 SelectionSort.selection_sort_corrigido_com_provas <> r:23 var
+R21226:21231 Coq.Init.Datatypes <> length def
+R21233:21233 SelectionSort.selection_sort_corrigido_com_provas <> l:21 var
+R21378:21388 SelectionSort.selection_sort_corrigido_com_provas <> select_spec thm
+R21378:21388 SelectionSort.selection_sort_corrigido_com_provas <> select_spec thm
+prf 22304:22321 <> select_le_all_rest
+binder 22334:22334 <> x:24
+binder 22336:22336 <> l:25
+binder 22338:22338 <> m:26
+binder 22340:22340 <> r:27
+R22366:22373 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R22357:22359 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R22347:22352 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R22354:22354 SelectionSort.selection_sort_corrigido_com_provas <> x:24 var
+R22356:22356 SelectionSort.selection_sort_corrigido_com_provas <> l:25 var
+R22360:22360 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R22362:22363 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R22365:22365 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R22361:22361 SelectionSort.selection_sort_corrigido_com_provas <> m:26 var
+R22364:22364 SelectionSort.selection_sort_corrigido_com_provas <> r:27 var
+R22374:22379 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R22381:22381 SelectionSort.selection_sort_corrigido_com_provas <> m:26 var
+R22383:22383 SelectionSort.selection_sort_corrigido_com_provas <> r:27 var
+R22529:22539 SelectionSort.selection_sort_corrigido_com_provas <> select_perm thm
+R22529:22539 SelectionSort.selection_sort_corrigido_com_provas <> select_perm thm
+R22582:22595 SelectionSort.selection_sort_corrigido_com_provas <> select_minimum thm
+R22582:22595 SelectionSort.selection_sort_corrigido_com_provas <> select_minimum thm
+R22726:22731 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R23153:23166 Coq.Sorting.Permutation <> Permutation_in thm
+R23153:23166 Coq.Sorting.Permutation <> Permutation_in thm
+R23179:23193 Coq.Sorting.Permutation <> Permutation_sym thm
+R23179:23193 Coq.Sorting.Permutation <> Permutation_sym thm
+def 23983:23992 <> select_min
+R23999:24002 Coq.Init.Datatypes <> list ind
+R24004:24006 Coq.Init.Datatypes <> nat ind
+binder 23995:23995 <> l:28
+R24011:24016 Coq.Init.Datatypes <> option ind
+R24018:24020 Coq.Init.Datatypes <> nat ind
+R24033:24033 SelectionSort.selection_sort_corrigido_com_provas <> l:28 var
+R24044:24045 Coq.Lists.List ListNotations ::list_scope:'['_']' not
+R24050:24053 Coq.Init.Datatypes <> None constr
+R24060:24063 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R24070:24073 Coq.Init.Datatypes <> Some constr
+R24076:24078 Coq.Init.Datatypes <> fst def
+R24081:24086 SelectionSort.selection_sort_corrigido_com_provas <> select def
+prf 24269:24286 <> select_min_correct
+binder 24299:24299 <> l:30
+binder 24301:24301 <> m:31
+R24329:24336 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R24320:24322 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R24308:24317 SelectionSort.selection_sort_corrigido_com_provas <> select_min def
+R24319:24319 SelectionSort.selection_sort_corrigido_com_provas <> l:30 var
+R24323:24326 Coq.Init.Datatypes <> Some constr
+R24328:24328 SelectionSort.selection_sort_corrigido_com_provas <> m:31 var
+R24337:24342 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R24344:24344 SelectionSort.selection_sort_corrigido_com_provas <> m:31 var
+R24346:24346 SelectionSort.selection_sort_corrigido_com_provas <> l:30 var
+R24819:24824 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R24819:24824 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R24887:24900 SelectionSort.selection_sort_corrigido_com_provas <> select_minimum thm
+R24887:24900 SelectionSort.selection_sort_corrigido_com_provas <> select_minimum thm
+def 25851:25857 <> ss_fuel
+R25867:25869 Coq.Init.Datatypes <> nat ind
+binder 25860:25863 <> fuel:32
+R25877:25880 Coq.Init.Datatypes <> list ind
+R25882:25884 Coq.Init.Datatypes <> nat ind
+binder 25873:25873 <> l:33
+R25889:25892 Coq.Init.Datatypes <> list ind
+R25894:25896 Coq.Init.Datatypes <> nat ind
+R25909:25912 SelectionSort.selection_sort_corrigido_com_provas <> fuel:32 var
+R25928:25929 Coq.Lists.List ListNotations ::list_scope:'['_']' not
+R25935:25935 Coq.Init.Datatypes <> S constr
+R25958:25958 SelectionSort.selection_sort_corrigido_com_provas <> l:33 var
+R25973:25974 Coq.Lists.List ListNotations ::list_scope:'['_']' not
+R25979:25980 Coq.Lists.List ListNotations ::list_scope:'['_']' not
+R25991:25994 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R26077:26082 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R26067:26067 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26069:26070 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26072:26072 Coq.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R26186:26189 Coq.Init.Datatypes <> ::list_scope:x_'::'_x not
+R26190:26196 SelectionSort.selection_sort_corrigido_com_provas <> ss_fuel:34 def
+def 26356:26357 <> ss
+R26364:26367 Coq.Init.Datatypes <> list ind
+R26369:26371 Coq.Init.Datatypes <> nat ind
+binder 26360:26360 <> l:37
+R26376:26379 Coq.Init.Datatypes <> list ind
+R26381:26383 Coq.Init.Datatypes <> nat ind
+R26390:26396 SelectionSort.selection_sort_corrigido_com_provas <> ss_fuel def
+R26399:26404 Coq.Init.Datatypes <> length def
+R26406:26406 SelectionSort.selection_sort_corrigido_com_provas <> l:37 var
+R26409:26409 SelectionSort.selection_sort_corrigido_com_provas <> l:37 var
+prf 26647:26657 <> le_all_perm
+binder 26670:26670 <> x:38
+binder 26672:26673 <> l1:39
+binder 26675:26676 <> l2:40
+R26700:26707 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R26683:26693 Coq.Sorting.Permutation <> Permutation ind
+R26698:26699 SelectionSort.selection_sort_corrigido_com_provas <> l2:40 var
+R26695:26696 SelectionSort.selection_sort_corrigido_com_provas <> l1:39 var
+R26719:26726 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R26708:26713 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R26715:26715 SelectionSort.selection_sort_corrigido_com_provas <> x:38 var
+R26717:26718 SelectionSort.selection_sort_corrigido_com_provas <> l1:39 var
+R26727:26732 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R26734:26734 SelectionSort.selection_sort_corrigido_com_provas <> x:38 var
+R26736:26737 SelectionSort.selection_sort_corrigido_com_provas <> l2:40 var
+R26785:26790 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R27025:27038 Coq.Sorting.Permutation <> Permutation_in thm
+R27025:27038 Coq.Sorting.Permutation <> Permutation_in thm
+R27051:27065 Coq.Sorting.Permutation <> Permutation_sym thm
+R27051:27065 Coq.Sorting.Permutation <> Permutation_sym thm
+prf 27467:27478 <> le_all_HdRel
+binder 27491:27491 <> x:41
+binder 27493:27493 <> l:42
+R27510:27517 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R27500:27505 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R27507:27507 SelectionSort.selection_sort_corrigido_com_provas <> x:41 var
+R27509:27509 SelectionSort.selection_sort_corrigido_com_provas <> l:42 var
+R27518:27522 Coq.Sorting.Sorted <> HdRel ind
+R27529:27529 SelectionSort.selection_sort_corrigido_com_provas <> l:42 var
+R27527:27527 SelectionSort.selection_sort_corrigido_com_provas <> x:41 var
+R27524:27525 Coq.Init.Peano <> le ind
+prf 28293:28307 <> ss_fuel_correct
+binder 28320:28320 <> n:43
+binder 28322:28322 <> l:44
+R28341:28348 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R28337:28339 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R28329:28334 Coq.Init.Datatypes <> length def
+R28336:28336 SelectionSort.selection_sort_corrigido_com_provas <> l:44 var
+R28340:28340 SelectionSort.selection_sort_corrigido_com_provas <> n:43 var
+R28372:28379 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R28349:28354 Coq.Sorting.Sorted <> Sorted ind
+R28360:28366 SelectionSort.selection_sort_corrigido_com_provas <> ss_fuel def
+R28368:28368 SelectionSort.selection_sort_corrigido_com_provas <> n:43 var
+R28370:28370 SelectionSort.selection_sort_corrigido_com_provas <> l:44 var
+R28356:28357 Coq.Init.Peano <> le ind
+R28380:28390 Coq.Sorting.Permutation <> Permutation ind
+R28395:28401 SelectionSort.selection_sort_corrigido_com_provas <> ss_fuel def
+R28403:28403 SelectionSort.selection_sort_corrigido_com_provas <> n:43 var
+R28405:28405 SelectionSort.selection_sort_corrigido_com_provas <> l:44 var
+R28392:28392 SelectionSort.selection_sort_corrigido_com_provas <> l:44 var
+R29381:29383 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R29372:29377 Coq.Init.Datatypes <> length def
+R29381:29383 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R29372:29377 Coq.Init.Datatypes <> length def
+R29499:29504 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R29499:29504 SelectionSort.selection_sort_corrigido_com_provas <> select def
+R29646:29658 SelectionSort.selection_sort_corrigido_com_provas <> select_length thm
+R29646:29658 SelectionSort.selection_sort_corrigido_com_provas <> select_length thm
+R29728:29730 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R29720:29725 Coq.Init.Datatypes <> length def
+R29728:29730 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R29720:29725 Coq.Init.Datatypes <> length def
+R30130:30140 SelectionSort.selection_sort_corrigido_com_provas <> select_perm thm
+R30130:30140 SelectionSort.selection_sort_corrigido_com_provas <> select_perm thm
+R30195:30212 SelectionSort.selection_sort_corrigido_com_provas <> select_le_all_rest thm
+R30195:30212 SelectionSort.selection_sort_corrigido_com_provas <> select_le_all_rest thm
+R30469:30474 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R30479:30485 SelectionSort.selection_sort_corrigido_com_provas <> ss_fuel def
+R30469:30474 SelectionSort.selection_sort_corrigido_com_provas <> le_all def
+R30479:30485 SelectionSort.selection_sort_corrigido_com_provas <> ss_fuel def
+R30517:30527 SelectionSort.selection_sort_corrigido_com_provas <> le_all_perm thm
+R30517:30527 SelectionSort.selection_sort_corrigido_com_provas <> le_all_perm thm
+R30936:30947 SelectionSort.selection_sort_corrigido_com_provas <> le_all_HdRel thm
+R30936:30947 SelectionSort.selection_sort_corrigido_com_provas <> le_all_HdRel thm
+R31252:31268 Coq.Sorting.Permutation <> Permutation_trans thm
+R31252:31268 Coq.Sorting.Permutation <> Permutation_trans thm
+R31319:31327 Coq.Sorting.Permutation <> perm_skip constr
+R31319:31327 Coq.Sorting.Permutation <> perm_skip constr
+prf 31583:31603 <> selectionsort_correct
+binder 31616:31616 <> l:45
+R31639:31646 Coq.Init.Logic <> ::type_scope:x_'/\'_x not
+R31623:31628 Coq.Sorting.Sorted <> Sorted ind
+R31634:31635 SelectionSort.selection_sort_corrigido_com_provas <> ss def
+R31637:31637 SelectionSort.selection_sort_corrigido_com_provas <> l:45 var
+R31630:31631 Coq.Init.Peano <> le ind
+R31647:31657 Coq.Sorting.Permutation <> Permutation ind
+R31662:31663 SelectionSort.selection_sort_corrigido_com_provas <> ss def
+R31665:31665 SelectionSort.selection_sort_corrigido_com_provas <> l:45 var
+R31659:31659 SelectionSort.selection_sort_corrigido_com_provas <> l:45 var
+R31696:31697 SelectionSort.selection_sort_corrigido_com_provas <> ss def
+R31708:31722 SelectionSort.selection_sort_corrigido_com_provas <> ss_fuel_correct thm
+R31708:31722 SelectionSort.selection_sort_corrigido_com_provas <> ss_fuel_correct thm
+R31814:31815 SelectionSort.selection_sort_corrigido_com_provas <> ss def
+R31817:31817 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31819:31820 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31822:31823 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31825:31826 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31828:31829 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31831:31831 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31842:31843 SelectionSort.selection_sort_corrigido_com_provas <> ss def
+R31845:31845 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31847:31848 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31850:31851 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31853:31854 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31856:31857 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31859:31859 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31870:31871 SelectionSort.selection_sort_corrigido_com_provas <> ss def
+R31873:31874 Coq.Lists.List ListNotations ::list_scope:'['_']' not
+def 31886:31907 <> selection_sort_example
+R31931:31933 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R31913:31914 SelectionSort.selection_sort_corrigido_com_provas <> ss def
+R31916:31916 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31918:31919 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31921:31922 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31924:31925 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31927:31928 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31930:31930 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31934:31934 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31936:31937 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31939:31940 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31942:31943 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31945:31946 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not
+R31948:31948 Coq.Lists.List ListNotations ::list_scope:'['_x_';'_x_';'_'..'_';'_x_']' not

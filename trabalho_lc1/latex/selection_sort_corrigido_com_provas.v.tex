@@ -1,0 +1,575 @@
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Require} \coqdockw{Import} \coqdocvar{Arith} \coqdocvar{List} \coqdocvar{Lia}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Require} \coqdockw{Import} \coqdocvar{Sorted}.\coqdoceol
+\coqdocnoindent
+\coqdockw{Require} \coqdockw{Import} \coqdocvar{Permutation}.\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Import} \coqdocvar{ListNotations}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\section{Motivação}
+
+
+
+
+      O Selection Sort ordena uma lista repetindo o seguinte procedimento: escolhe o menor elemento 
+    da parte ainda não ordenada da lista, coloca esse elemento na primeira posição dessa parte
+     e repete o processo sobre o restante da lista.
+
+
+    Só que notamos que para provar formalmente que o algoritmo está correto, não bastava mostrar
+    que a saída está em ordem crescente. Também precisamos garantir que nenhum
+    elemento foi perdido, duplicado ou criado.
+
+
+    Pra isso, precisamos garantir que está ordenada e a saída está preservando os elementos da lista original
+
+
+
+\begin{itemize}
+\item  \coqdoclibrary{Sorted} \coqexternalref{le}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Peano}{\coqdocinductive{le}} (\coqdocdefinition{ss} \coqdocvar{l}): Onde a lista (l) vai representar um resultado obtido pelo Selection Sort (ss) e \coqexternalref{le}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Peano}{\coqdocinductive{le}} está ordenada usando a relação menor ou igual, e o resultado vai tá em ordem crescente.
+
+\item  \coqdoclibrary{Permutation} \coqdocvar{l} (\coqdocdefinition{ss} \coqdocvar{l}): Tanto a lista original e a resultante possuem os mesmos elementos, a ordem pode ter mudado, mas nenhum valor será perdido, criado ou duplicado.
+
+\end{itemize}
+    
+
+\section{Um elemento é menor ou igual a todos os elementos da lista}
+
+
+
+
+      Estabelecemos quais propriedades precisariamos provar para a corretude do algorítmo, então pensamos em como representar a ideia do menor elemento.
+    No Selection Sort, a cada etapa precisamos escolher um valor que seja menor ou igual à todos os outros elementos da parte da lista que ainda não foi ordenada. 
+    Então criamos essa função, \coqdocdefinition{le\_all} (less than or equal to all), ou seja,
+    menor ou igual a todos. Ela recebe dois argumentos: \coqdocvar{x} : \coqexternalref{nat}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocinductive{nat}}, que \coqdocvar{x} representa um número natural e \coqdocvar{l}: \coqexternalref{list}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocinductive{list}} \coqexternalref{nat}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocinductive{nat}}, onde \coqdocvar{l} representa uma lista de números naturais.
+    O resultado da definição possui o tipo \coqdockw{Prop}, então le\_all(x, l) não produzirá uma nova lista, mas sim fará uma preposição lógica, que significa
+    que uma afirmação que pode ter como valor: verdade, ou podemos identificar ela como falsa. A ideia da nossa definição é considerar qualquer elemento \coqdocvar{y} que pertecer a uma lista \coqdocvar{l}.
+    Todavia, precisaríamos provar que \coqdocvar{x} é menor ou igual \coqdocvar{y}.
+    Essa definição vai ser importante nas próximas etapas da prova, já que irá garantir que o elemento escolhido pela função da seleção é realmente o menor valor da lista.
+  
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Definition} \coqdocvar{le\_all} (\coqdocvar{x} : \coqdocvar{nat}) (\coqdocvar{l} : \coqdocvar{list} \coqdocvar{nat}) : \coqdockw{Prop} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{y}, \coqdocvar{In} \coqdocvar{y} \coqdocvar{l} \ensuremath{\rightarrow} \coqdocvar{x} \ensuremath{\le} \coqdocvar{y}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\section{Seleção do menor elemento}
+
+
+
+
+      Agora que definimos le\_all, o próximo passo seria pensar em como o selection sort faria para encontrar esse elemento quando for executado.
+    Inicialmente, a primeira ideia seria utilizar uma função que receberia uma lista e devolveria o menor número, mas seria insuficiente e o pensamento estava errado.
+    O selection sort não precisa saber somente qual é o menor valor, ele deveria continuar ordenando até o fim.
+    Dessa forma pensamos que a função, na verdade, deveria devolver duas informações juntas: o menor elemento encontrado e a lista que foi formada pelos demais elementos    
+    Então: 
+
+
+    \coqdocdefinition{select} \coqdocvar{x} \coqdocvar{l} considera os elementos da lista \coqdocvar{x} :: \coqdocvar{l}.
+
+
+    O resultado vai ser um par (\coqdocvar{m}, \coqdocvar{r}) o qual:
+
+
+
+\begin{itemize}
+\item  \coqdocvar{m} é o menor elemento de \coqdocvar{x} :: \coqdocvar{l},
+
+\item  \coqdocvar{r} seria todos os demais elementos,
+
+\item  \coqdocvar{x} :: \coqdocvar{l} então é uma permutação de \coqdocvar{m} :: \coqdocvar{r}.
+
+\end{itemize}
+
+
+    Essa propriedade vai garantir que a função select não remova, duplique ou crie um elemento, só organizaria e separaria o menor elemento.
+
+
+    Então a função na \coqdocdefinition{select}, definimos então como uma lógica recursiva, e para isso usamos \coqdockw{Fixpoint}.
+    Ela recebe dois argumentos: um números natural \coqdocvar{x}, que funcionaria como um candidato
+    e uma lista \coqdocvar{l}, que terá os valores que ainda vamos analisar.
+
+
+    O resultado possui o tipo \coqexternalref{nat}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocinductive{nat}} \ensuremath{\times} \coqexternalref{list}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocinductive{list}} \coqexternalref{nat}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocinductive{nat}}. Isso é uma função que vai devolver um par formado pelo menor elemento e a lista com os restantes.
+    E para a busca, a função vai analisar a estrutura da lista com \coqdockw{match} \coqdocvar{l} \coqdockw{with}.
+
+
+    No caso base, seria \coqdocvar{l} = [], não tem mais elementos para comparar com o nosso candidato no momento. \coqdocvar{X} será devolvido com o menor elemento e o restante da lista vazia.
+    Já no segundo, a lista tem \coqdocvar{h}::\coqdocvar{t} (cabeça e cauda), e vamos comparar \coqdocvar{h} com o candidato atual que é \coqdocvar{x}.
+    Se for verdadeiro, \coqdocvar{x} continua sendo nosso candidato, a função chama a si mesmo sobre a cauda, mantendo x e devolve um par (\coqdocvar{m},\coqdocvar{r}), e como \coqdocvar{h} não foi escolhido para continuar como candidato, ele precisa estar na lista restante, por isso o resultado (m,h::r).
+    Caso seja falso, significa que \coqdocvar{h} é menor \coqdocvar{x}. Nessa caso, \coqdocvar{h} passa a ser o novo candidato de menor elemento e chama a função de novo, e retorna a mesma estrutura de saída do caso verdade. Nesse caso o \coqdocvar{x} não pode ser 
+    descartado, então é anexado à lista do restantes.
+
+
+    Dessa forma à cada etapa, o menor valor entre \coqdocvar{x} e \coqdocvar{h} continua sendo comparado com os próximos elementos, enquanto o outro valor é colocado na lista restante. O resultado da recursão \coqdocvar{m} será o menor elemento e \coqdocvar{r} possuirá o resto da lista.
+
+
+    
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Fixpoint} \coqdocvar{select} (\coqdocvar{x} : \coqdocvar{nat}) (\coqdocvar{l} : \coqdocvar{list} \coqdocvar{nat}) : \coqdocvar{nat} \ensuremath{\times} \coqdocvar{list} \coqdocvar{nat} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{match} \coqdocvar{l} \coqdockw{with}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} [] \ensuremath{\Rightarrow} (\coqdocvar{x}, [])\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqdocvar{h} :: \coqdocvar{t} \ensuremath{\Rightarrow}\coqdoceol
+\coqdocindent{3.00em}
+\coqdockw{if} \coqdocvar{x} <=? \coqdocvar{h} \coqdockw{then}\coqdoceol
+\coqdocindent{4.00em}
+\coqdockw{let} '(\coqdocvar{m}, \coqdocvar{r}) := \coqdocvar{select} \coqdocvar{x} \coqdocvar{t} \coqdoctac{in}\coqdoceol
+\coqdocindent{4.00em}
+(\coqdocvar{m}, \coqdocvar{h} :: \coqdocvar{r})\coqdoceol
+\coqdocindent{3.00em}
+\coqdockw{else}\coqdoceol
+\coqdocindent{4.00em}
+\coqdockw{let} '(\coqdocvar{m}, \coqdocvar{r}) := \coqdocvar{select} \coqdocvar{h} \coqdocvar{t} \coqdoctac{in}\coqdoceol
+\coqdocindent{4.00em}
+(\coqdocvar{m}, \coqdocvar{x} :: \coqdocvar{r})\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{end}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\section{Especificação da função \texorpdfstring{\protect\coqdocdefinition{select}}{select}}
+
+
+
+
+    Este lema é o mais importante da primeira parte. Depois de definir \coqdocdefinition{select}, já podemos 
+    executar a função, ela receberá um candidato \coqdocvar{x}, analisará \coqdocvar{l} e devolverá um par (\coqdocvar{m},\coqdocvar{r}).
+    Observando que a função ao devolver o par não é o bastante para utilizarmos o \coqdocdefinition{select}, precisamos demonstrar
+    formalmente que o resultado produzido por ela possui o comportamento que esperamos. Por isso criamos o lema \coqdoclemma{select\_spec}.
+    Spec vem de specification, esse lema funcionará como um verificador da função: sempre que \coqdocdefinition{select} \coqdocvar{x} \coqdocvar{l}
+    devolve o par(\coqdocvar{m},\coqdocvar{r}), algumas propriedades devem ser obrigatoriamente ser verdadeiras.
+
+
+    A hipótese: 
+
+
+    [\coqdocdefinition{select} \coqdocvar{x} \coqdocvar{l} = (\coqdocvar{m}, \coqdocvar{r})]
+
+
+    Indica que ao executar \coqdocdefinition{select} sobre os elementos de \coqdocvar{x}::1, o elemento
+    que selecionamos como \coqdocvar{x} e \coqdocvar{l} são respectivamente \coqdocvar{m} e a lista restante \coqdocvar{r}.
+    A partir dessa hipótese, provaremos 3 propriedades, a primeira é: 
+
+
+    [ \coqdoclibrary{Permutation} (\coqdocvar{x} :: \coqdocvar{l}) (\coqdocvar{m} :: \coqdocvar{r})]
+
+
+    Ela vai garanti que a lista de entrada e a lista que foi produzida possui os mesmos elementos. A função altera posições.
+
+
+    A segunda é:
+
+
+    [\coqdocvar{all} \coqdocvar{m} (\coqdocvar{x} :: \coqdocvar{l})]
+
+
+    Vai garanti que \coqdocvar{m} é menor ou igual à todos os elementos considerados pela função, então \coqdocvar{m} representa o menor elemento de \coqdocvar{x}::1
+
+
+    A terceira é: 
+
+
+    [\coqexternalref{length}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocdefinition{length}} \coqdocvar{r} = \coqexternalref{length}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocdefinition{length}} \coqdocvar{l}]
+
+
+    Depois que o único elemeneto é separado como mínimo, a lista possui a forma \coqdocvar{x} :: 1. O restante \coqdocvar{r} deve possuir o mesmo tamanho 1. Assim confirmamos que um elemento foi separado e nenhum outro elemento desapareceu durante o processo.
+    Essas três propriedades juntas descrevem completamente o comportamento da função \coqdocdefinition{select} e serão usadas mais adiante na prova do Selection Sort.
+
+
+  
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Lemma} \coqdocvar{select\_spec} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{x} \coqdocvar{l} \coqdocvar{m} \coqdocvar{r},\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{select} \coqdocvar{x} \coqdocvar{l} = (\coqdocvar{m}, \coqdocvar{r}) \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{Permutation} (\coqdocvar{x} :: \coqdocvar{l}) (\coqdocvar{m} :: \coqdocvar{r}) \ensuremath{\land}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{le\_all} \coqdocvar{m} (\coqdocvar{x} :: \coqdocvar{l}) \ensuremath{\land}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{length} \coqdocvar{r} = \coqdocvar{length} \coqdocvar{l}.\coqdoceol
+\end{coqdoccode}
+Começamos introduzindo \coqdocvar{x} e \coqdocvar{l}. Não colocamos \coqdocvar{m}, \coqdocvar{r} e a hipótese sobre o resultado de \coqdocdefinition{select}, por que ainda precisamos decidir a estrutura que faremos a indução. 
+\begin{coqdoccode}
+\end{coqdoccode}
+A função \coqdocdefinition{select} é recursiva sobre a lista \coqdocvar{l}. Então, nossa prova também será feita por indução.
+      Durante a execução da função, o candidato ao menor elemento pode variar. Na chamada recursiva, podemos executar \coqdocdefinition{select} \coqdocvar{x} \coqdocvar{t}, mas em outra podemos executar \coqdocdefinition{select} \coqdocvar{h} \coqdocvar{t}.
+      Se mantivéssemos \coqdocvar{x} fixo no contexto antes da indução, a hipótese de indução poderia ficar específica demais e não poderia ser aplicada quando o candidato mudasse para \coqdocvar{h}.
+      O comando \coqdocvar{revert} \coqdocvar{x} devolve \coqdocvar{x} ao nosso objetivo. Garantindo com que a hipótese de indução será válida para qualquer candidato ao menor elemento. 
+\begin{coqdoccode}
+\end{coqdoccode}
+Nossa indução sobre \coqdocvar{l} criará dois casos, sendo o primeiro em que \coqdocvar{l} = [] e o passo indutivo, em que \coqdocvar{l} = \coqdocvar{h} :: \coqdocvar{t}.
+      Depois da divisão dos casos, colocaremos novamente o \coqdocvar{x}, o menor elemento \coqdocvar{m}, a lista restante \coqdocvar{r} e a hipótese \coqdocvar{Hselect}. 
+\begin{coqdoccode}
+\end{coqdoccode}
+Nosso objetivo possui três propriedades conectadas por /\symbol{92}\symbol{92}. O primeiro \coqdoctac{split} separa a propriedade de permutação das outras duas propriedades. 
+\begin{coqdoccode}
+\end{coqdoccode}
+Precisamos provar que \coqdocvar{x} :: [] é uma permutação de \coqdocvar{x} :: []. Como as duas listas são iguais, usamos a reflexividade da relação de permutação. 
+\begin{coqdoccode}
+\end{coqdoccode}
+Ainda restam duas propriedades conectadas por /\symbol{92}\symbol{92}:
+
+\begin{itemize}
+\item  \coqdocdefinition{le\_all} \coqdocvar{x} [\coqdocvar{x}];
+
+\item  \coqexternalref{length}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocdefinition{length}} [] = \coqexternalref{length}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocdefinition{length}} [].
+
+\end{itemize}
+          Um novo \coqdoctac{split} cria um objetivo para cada uma delas. 
+\begin{coqdoccode}
+\end{coqdoccode}
+Para provar \coqdocdefinition{le\_all} \coqdocvar{x} [\coqdocvar{x}], abrimos a definição de \coqdocdefinition{le\_all}. 
+\begin{coqdoccode}
+\end{coqdoccode}
+Agora precisamos considerar um elemento qualquer \coqdocvar{y} e uma hipótese \coqdocvar{Hy} afirmando que \coqdocvar{y} pertence à lista \coqdocvar{x} :: []. 
+\begin{coqdoccode}
+\end{coqdoccode}
+A simplificação transforma a hipótese de pertencimento em duas possibilidades, sendo elas: \coqdocvar{y} = \coqdocvar{x}; e \coqdocvar{y} pertence à lista vazia. 
+\begin{coqdoccode}
+\end{coqdoccode}
+Na primeira possibilidade, sabemos que \coqdocvar{y} = \coqdocvar{x}. Substituímos \coqdocvar{y} por \coqdocvar{x} e precisamos provar \coqdocvar{x} \ensuremath{\le} \coqdocvar{x}. 
+\begin{coqdoccode}
+\end{coqdoccode}
+A segunda possibilidade afirma que \coqdocvar{y} pertence à lista vazia. Isso é impossível, portanto encerramos o caso por contradição. 
+\begin{coqdoccode}
+\end{coqdoccode}
+Por fim, precisamos provar que o tamanho da lista restante vazia é igual ao tamanho da lista original vazia. Os dois lados são exatamente iguais. 
+\begin{coqdoccode}
+\end{coqdoccode}
+O comando \coqdoctac{destruct} divide a nossa prova em duas partes:
+
+\begin{itemize}
+\item  Se x <= h for verdade (\coqdocvar{true});
+
+\item  Se x <= h for mentira (\coqdocvar{false}).
+
+\end{itemize}
+        A gente guarda o resultado desse teste na hipótese \coqdocvar{Hxh}. 
+\begin{coqdoccode}
+\end{coqdoccode}
+Assim fechamos o caso base e as duas ramificações do if.
+    Provamos com sucesso que sempre que select devolve (m, r), as propriedades da especificação valem. 
+\begin{coqdoccode}
+\coqdocemptyline
+\end{coqdoccode}
+\section{Consequências menores da especificação}
+
+
+
+
+    Depois que provamos o \coqdoclemma{select\_spec}, temos a descrição completa de como a função \coqdocdefinition{select} funciona.
+
+
+[\coqdocdefinition{select} \coqdocvar{x} \coqdocvar{l} = (\coqdocvar{m}, \coqdocvar{r})]
+
+
+    Teremos três informações:
+
+\begin{itemize}
+\item  Que \coqdocvar{x} :: \coqdocvar{l} é uma permutação de \coqdocvar{m} :: \coqdocvar{r};
+
+\item  Que \coqdocvar{m} é menor ou igual a todo mundo em \coqdocvar{x} :: \coqdocvar{l};
+
+\item  Que o tamanho do resto \coqdocvar{r} é igual ao tamanho de \coqdocvar{l}.
+
+\end{itemize}
+
+
+    Só que nem sempre precisaremos usar essas três coisas ao mesmo tempo nas provas. Às vezes só queremos saber que os elementos foram mantidos com a permutação, outras vezes só precisamos do mínimo, ou só do tamanho.
+    Para não ter que ficar abrindo o \coqdoclemma{select\_spec} e limpando o que não importa toda hora, criamos três lemas menores. Cada um deles puxa só uma parte do que o \coqdoclemma{select\_spec} garante. 
+
+\subsection{Preservação dos elementos}
+
+
+
+
+    O lema \coqdoclemma{select\_perm} serve para isolar a primeira parte do \coqdoclemma{select\_spec}.
+    O objetivo dele é provar que, se o \coqdocdefinition{select} pegou uma lista \coqdocvar{x} :: \coqdocvar{l} e devolveu (\coqdocvar{m}, \coqdocvar{r}), os elementos continuam sendo exatamente os mesmos no final. A ordem até pode mudar, mas ninguém some, duplica ou é criado do nada.
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Lemma} \coqdocvar{select\_perm} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{x} \coqdocvar{l} \coqdocvar{m} \coqdocvar{r},\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{select} \coqdocvar{x} \coqdocvar{l} = (\coqdocvar{m}, \coqdocvar{r}) \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{Permutation} (\coqdocvar{x} :: \coqdocvar{l}) (\coqdocvar{m} :: \coqdocvar{r}).\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\subsection{O elemento selecionado é realmente o menor de todos}
+
+
+
+
+    O lema \coqdoclemma{select\_minimum} faz a mesma coisa, mas isola a segunda propriedade ele garante que o \coqdocvar{m} que o \coqdocdefinition{select} devolve é de fato menor ou igual a qualquer elemento da lista original.
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Lemma} \coqdocvar{select\_minimum} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{x} \coqdocvar{l} \coqdocvar{m} \coqdocvar{r},\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{select} \coqdocvar{x} \coqdocvar{l} = (\coqdocvar{m}, \coqdocvar{r}) \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{le\_all} \coqdocvar{m} (\coqdocvar{x} :: \coqdocvar{l}).\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\subsection{Tamanho da lista restante}
+
+
+
+
+    O lema \coqdoclemma{select\_length} isola a última parte e nos mostra que depois de tirar o menor elemento, a lista que sobra (\coqdocvar{r}) tem o mesmo tamanho da cauda original (\coqdocvar{l}). Isso prova que a gente tirou exatamente um elemento e não perdeu nada no caminho.
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Lemma} \coqdocvar{select\_length} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{x} \coqdocvar{l} \coqdocvar{m} \coqdocvar{r},\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{select} \coqdocvar{x} \coqdocvar{l} = (\coqdocvar{m}, \coqdocvar{r}) \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{length} \coqdocvar{r} = \coqdocvar{length} \coqdocvar{l}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\section{O mínimo também é menor ou igual aos elementos restantes}
+
+
+
+
+    A nosso lemma dirá que o \coqdocvar{m} é menor ou igual a todo mundo da lista original \coqdocvar{x} :: \coqdocvar{l}.
+    Só que no Selection Sort, depois que colocamos esse \coqdocvar{m} na primeira posição, o algoritmo vai continuar ordenando só a lista que restou (\coqdocvar{r}).
+
+
+    Por isso, precisamos de uma prova que garanta que o \coqdocvar{m} também é menor ou igual a todos da lista restante \coqdocvar{r} (\coqdocdefinition{le\_all} \coqdocvar{m} \coqdocvar{r}).
+    Para provar isso, vamos usar duas coisas que já temos:
+
+\begin{itemize}
+\item  \coqdocvar{x} :: \coqdocvar{l} é uma permutação de \coqdocvar{m} :: \coqdocvar{r};
+
+\item  \coqdocvar{m} é menor ou igual a todo mundo em \coqdocvar{x} :: \coqdocvar{l}.
+
+\end{itemize}
+    Como uma permutação não muda quais elementos estão na lista (só a ordem), qualquer elemento de \coqdocvar{r} também está na lista original. Então, se \coqdocvar{m} era menor que todos os elementos, ele continua sendo menor que todo mundo em \coqdocvar{r}.
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Lemma} \coqdocvar{select\_le\_all\_rest} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{x} \coqdocvar{l} \coqdocvar{m} \coqdocvar{r},\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{select} \coqdocvar{x} \coqdocvar{l} = (\coqdocvar{m}, \coqdocvar{r}) \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{le\_all} \coqdocvar{m} \coqdocvar{r}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\section{Interface semelhante à função original \texorpdfstring{\protect\coqdocdefinition{select\_min}}{select\_min}}
+
+
+
+
+    A nossa nova função \coqdocdefinition{select} devolve um par (\coqdocvar{m}, \coqdocvar{r}) para o Selection Sort continuar.
+    Só que, para manter as coisas parecidas com o projeto original, que tinha uma função \coqdocdefinition{select\_min} que só devolvia o menor elemento, criamos essa função aqui de interface.
+
+
+    Ela utiliza o \coqdocdefinition{select} por dentro.
+    Como a lista pode vir vazia, usamos o tipo \coqexternalref{option}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocinductive{option}} \coqexternalref{nat}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocinductive{nat}}:
+
+\begin{itemize}
+\item  Ela devolve \coqexternalref{None}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocconstructor{None}} se a lista estiver vazia.
+
+\item  E \coqexternalref{Some}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocconstructor{Some}} \coqdocvar{m} com o menor valor se tiver elementos.
+
+\end{itemize}
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Definition} \coqdocvar{select\_min} (\coqdocvar{l} : \coqdocvar{list} \coqdocvar{nat}) : \coqdocvar{option} \coqdocvar{nat} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{match} \coqdocvar{l} \coqdockw{with}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} [] \ensuremath{\Rightarrow} \coqdocvar{None}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqdocvar{x} :: \coqdocvar{xs} \ensuremath{\Rightarrow} \coqdocvar{Some} (\coqdocvar{fst} (\coqdocvar{select} \coqdocvar{x} \coqdocvar{xs}))\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{end}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+Aqui a gente prova que a nossa interface está certa, se ela devolver \coqexternalref{Some}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocconstructor{Some}} \coqdocvar{m}, então esse \coqdocvar{m} realmente é menor ou igual a todo mundo na lista \coqdocvar{l}. 
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Lemma} \coqdocvar{select\_min\_correct} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{l} \coqdocvar{m},\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{select\_min} \coqdocvar{l} = \coqdocvar{Some} \coqdocvar{m} \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{le\_all} \coqdocvar{m} \coqdocvar{l}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\section{Função principal do Selection Sort}
+
+
+
+
+    O Coq/Rocq é meio dificil com funções recursivas, ele exige que a gente garanta que a função vai terminar e não vai ficar rodando para sempre.
+    Como a nossa função \coqdocdefinition{select} diminui a lista de um jeito que não é tão óbvio visualmente, a gente usa um parâmetro ``combustível'' (\coqdocvar{fuel}).
+
+
+    Toda vez que a função faz uma chamada recursiva, ela gasta 1 unidade de combustível. Se o combustível chegar a 0, ela para.
+    Na nossa função principal \coqdocdefinition{ss}, passamos o próprio tamanho da lista como combustível inicial. Como a cada passo do Selection Sort ordenamos um elemento, esse combustível é perfeito e suficiente para terminar o trabalho.
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Fixpoint} \coqdocvar{ss\_fuel} (\coqdocvar{fuel} : \coqdocvar{nat}) (\coqdocvar{l} : \coqdocvar{list} \coqdocvar{nat}) : \coqdocvar{list} \coqdocvar{nat} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{match} \coqdocvar{fuel} \coqdockw{with}\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} 0 \ensuremath{\Rightarrow} []\coqdoceol
+\coqdocindent{1.00em}
+\ensuremath{|} \coqdocvar{S} \coqdocvar{fuel'} \ensuremath{\Rightarrow}\coqdoceol
+\coqdocindent{3.00em}
+\coqdockw{match} \coqdocvar{l} \coqdockw{with}\coqdoceol
+\coqdocindent{3.00em}
+\ensuremath{|} [] \ensuremath{\Rightarrow} []\coqdoceol
+\coqdocindent{3.00em}
+\ensuremath{|} \coqdocvar{x} :: \coqdocvar{xs} \ensuremath{\Rightarrow}\coqdoceol
+\coqdocindent{5.00em}
+\coqdoceol
+\coqdocindent{5.00em}
+\coqdockw{let} '(\coqdocvar{m}, \coqdocvar{r}) := \coqdocvar{select} \coqdocvar{x} \coqdocvar{xs} \coqdoctac{in}\coqdoceol
+\coqdocindent{5.00em}
+\coqdoceol
+\coqdocindent{5.00em}
+\coqdocvar{m} :: \coqdocvar{ss\_fuel} \coqdocvar{fuel'} \coqdocvar{r}\coqdoceol
+\coqdocindent{3.00em}
+\coqdockw{end}\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{end}.\coqdoceol
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Definition} \coqdocvar{ss} (\coqdocvar{l} : \coqdocvar{list} \coqdocvar{nat}) : \coqdocvar{list} \coqdocvar{nat} :=\coqdoceol
+\coqdocindent{1.00em}
+\coqdocvar{ss\_fuel} (\coqdocvar{length} \coqdocvar{l}) \coqdocvar{l}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\section{Lemas auxiliares para a prova da ordenação}
+
+
+
+ Aqui provamos que, se sabemos que ``x é menor ou igual a todo mundo em l1'', e l1 é uma permutação de l2, então ``x também é menor ou igual a todo mundo em l2''.
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Lemma} \coqdocvar{le\_all\_perm} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{x} \coqdocvar{l1} \coqdocvar{l2},\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{Permutation} \coqdocvar{l1} \coqdocvar{l2} \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{le\_all} \coqdocvar{x} \coqdocvar{l1} \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{le\_all} \coqdocvar{x} \coqdocvar{l2}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+Ultiziamos o predicado \coqdoclibrary{Sorted} para dizer que uma lista está ordenada. 
+    Para provar que \coqdocvar{x} :: \coqdocvar{l} está ordenada, precisamos mostrar que o \coqdocvar{x} é menor ou igual à cabeça de \coqdocvar{l}. 
+    A biblioteca chama isso de \coqexternalref{HdRel}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Sorting.Sorted}{\coqdocinductive{HdRel}} \coqexternalref{le}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Peano}{\coqdocinductive{le}} \coqdocvar{x} \coqdocvar{l}. 
+    Esse lemma prova que, se o x é menor que todo mundo (\coqdocdefinition{le\_all} \coqdocvar{x} \coqdocvar{l}), ele com certeza é menor que a cabeça. 
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Lemma} \coqdocvar{le\_all\_HdRel} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{x} \coqdocvar{l},\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{le\_all} \coqdocvar{x} \coqdocvar{l} \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{HdRel} \coqdocvar{le} \coqdocvar{x} \coqdocvar{l}.\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\section{Correção da função com combustível}
+
+
+
+
+    Esta é segunda parte do trabalho é muito importante.
+    O lemma \coqdoclemma{ss\_fuel\_correct} vai provar duas coisas juntas de uma vez só:
+
+\begin{itemize}
+\item  Que a lista de saída está ordenada (\coqdoclibrary{Sorted});
+
+\item  Que a lista de saída é uma permutação da original.
+
+\end{itemize}
+
+
+   Fazemos essa prova usando indução no número \coqdocvar{n}, que representa o combustível e, por tabela, o tamanho da lista, a hipótese \coqexternalref{length}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocdefinition{length}} \coqdocvar{l} = \coqdocvar{n}. 
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Lemma} \coqdocvar{ss\_fuel\_correct} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{n} \coqdocvar{l},\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{length} \coqdocvar{l} = \coqdocvar{n} \ensuremath{\rightarrow}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{Sorted} \coqdocvar{le} (\coqdocvar{ss\_fuel} \coqdocvar{n} \coqdocvar{l}) \ensuremath{\land}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{Permutation} \coqdocvar{l} (\coqdocvar{ss\_fuel} \coqdocvar{n} \coqdocvar{l}).\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\section{Teorema final}
+
+
+
+
+    A nossa função \coqdocdefinition{ss} \coqdocvar{l} chama o \coqdocdefinition{ss\_fuel} passando exatamente o \coqexternalref{length}{http://coq.inria.fr/doc/V8.20.1/stdlib//Coq.Init.Datatypes}{\coqdocdefinition{length}} \coqdocvar{l}. 
+    Como isso bate direitinho com o que o lemma \coqdoclemma{ss\_fuel\_correct} pede. A prova fecha por reflexividade.
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Theorem} \coqdocvar{selectionsort\_correct} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdockw{\ensuremath{\forall}} \coqdocvar{l},\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{Sorted} \coqdocvar{le} (\coqdocvar{ss} \coqdocvar{l}) \ensuremath{\land}\coqdoceol
+\coqdocindent{2.00em}
+\coqdocvar{Permutation} \coqdocvar{l} (\coqdocvar{ss} \coqdocvar{l}).\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+\section{Exemplos executáveis}
+
+
+
+
+    Exemplos para testar. 
+\begin{coqdoccode}
+\coqdocemptyline
+\coqdocemptyline
+\coqdocnoindent
+\coqdockw{Example} \coqdocvar{selection\_sort\_example} :\coqdoceol
+\coqdocindent{1.00em}
+\coqdocvar{ss} [3; 1; 4; 1; 2] = [1; 1; 2; 3; 4].\coqdoceol
+\coqdocemptyline
+\end{coqdoccode}
+Repositório-base: https://github.com/flaviodemoura/selection\_sort 
+\begin{coqdoccode}
+\end{coqdoccode}
