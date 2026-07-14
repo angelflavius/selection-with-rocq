@@ -1,3 +1,5 @@
+O relatório está dentro da pasta latex com o nome de relatorio.pdf
+
 Alunos:
 
     Erik Cojho  23102133
